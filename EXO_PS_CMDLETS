@@ -1,0 +1,54 @@
+#check if exchange online management is installed***
+$EXO = get-installedmodule | Where-Object {$_.Name -Eq "ExchangeOnlineManagement"}
+
+If ($Exo -eq $null) {
+write-host "Exchange Online Management is not installed"
+} Else {
+Write-host "Exchange Online Management version" $EXO.Version "is installed"
+}
+
+#enable the running of scripts in PowerShell on your system
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted 
+
+#or to enable the running of scripts in PowerShell for all users.
+Set-ExecutionPolicy unrestricted
+
+#install the Exchange Online management module
+install-module exchangeonlinemanagement -scope CurrentUser
+
+#Upgrade the ExchangeOnline PowerShell module to the latest version
+#Use the get-installedmodule cmdlet to verify the new module is installed.
+
+get-installedmodule
+
+get-installedmodule
+
+#Update-Module ExchangeOnlineManagement
+
+Update-Module ExchangeOnlineManagement
+
+#Connect to EXO
+import-module ExchangeOnlineManagement
+Connect-ExchangeOnline
+
+#inplace archiving
+Start-ManagedFolderAssistant -Identity ann.temidara@asseco.ng
+
+#Create a shared mailbox
+New-Mailbox -Shared -Name "Support Department" -DisplayName "Support" -Alias support
+
+#Automap the shared mailbox to a user account
+Add-MailboxPermission -Identity support -AccessRights FullAccess -InheritanceType All -AutoMapping:$true -User joshua@z2nrn.onmicrosoft.com
+
+#Create a user in Microsoft 365
+Install-Module -Name AzureAD
+Import-Module  AzureAD
+Connect-AzureAD
+Install-Module MSOnline
+Import-Module MSOnline
+Connect-MsolService
+Get-MsolAccountSku
+New-MsolUser -DisplayName RoseMary -FirstName Rose -LastName Mary -UserPrincipalName rose.mary@z2nrn.onmicrosoft.com 
+New-MsolUser -DisplayName "Josh Ads" -FirstName Josh -LastName Ads -UserPrincipalName joshy.ads@z2nrn.onmicrosoft.com -UsageLocation US -LicenseAssignment z2nrn:DEVELOPERPACK_E5
+
+New-MsolUser -DisplayName "Josh Adigun" -FirstName Josh -LastName Adigun -UserPrincipalName joshy.adigun@z2nrn.onmicrosoft.com -UsageLocation US Set-MsolUserLicense -AddLicenses z2nrn:DEVELOPERPACK_E5
